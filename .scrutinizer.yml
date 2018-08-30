@@ -9,4 +9,4 @@ build:
 
             # These formats are supported:
             # clover, cobertura, jacoco, python-cc, ruby-cc, go-cc
-            format: name-of-format
+            format: clover
