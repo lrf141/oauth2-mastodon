@@ -79,4 +79,13 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($encodedScope, $url);
     }
 
+
+    public function testGetAuthorizationUrl()
+    {
+        $url = $this->provider->getAuthorizationUrl();
+        $uri = parse_url($url);
+
+        $this->assertEquals('/oauth/authorize', $uri['path']);
+    }
+
 }
