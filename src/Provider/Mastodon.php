@@ -42,9 +42,7 @@ class Mastodon extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        $oauth_url = $this->instance.'/oauth/authorize';
-
-        return $oauth_url;
+        return $this->instance.'/oauth/authorize';
     }
 
     /**
@@ -53,9 +51,7 @@ class Mastodon extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        $oauth_token_url = $this->instance.'/oauth/token';
-
-        return $oauth_token_url;
+        return $this->instance.'/oauth/token';
     }
 
 
