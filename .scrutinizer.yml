@@ -1,0 +1,12 @@
+build:
+  nodes:
+    coverage:
+      tests:
+        override:
+        - command: ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+          coverage:
+            file: ./build/coverage/log/coverage.xml
+
+            # These formats are supported:
+            # clover, cobertura, jacoco, python-cc, ruby-cc, go-cc
+            format: name-of-format
