@@ -37,7 +37,7 @@ class Mastodon extends AbstractProvider
 
 
     /**
-     *
+     * Get authorization url to begin OAuth flow
      * @return string
      */
     public function getBaseAuthorizationUrl()
@@ -46,6 +46,7 @@ class Mastodon extends AbstractProvider
     }
 
     /**
+     * Get access token url to retrieve token
      * @param array $params
      * @return string
      */
@@ -56,6 +57,7 @@ class Mastodon extends AbstractProvider
 
 
     /**
+     * Get provider url to fetch user details
      * @param AccessToken $token
      * @return string
      */
@@ -65,6 +67,7 @@ class Mastodon extends AbstractProvider
     }
 
     /**
+     * Get the default scopes used by this provider
      * @return array
      */
     protected function getDefaultScopes()
@@ -73,6 +76,7 @@ class Mastodon extends AbstractProvider
     }
 
     /**
+     * Check a provider response for errors
      * @throws IdentityProviderException
      * @param ResponseInterface $response
      * @param array|string $data
@@ -91,6 +95,8 @@ class Mastodon extends AbstractProvider
 
 
     /**
+     * Generate a user object from a successful user details request.
+     *
      * @param array $response
      * @param AccessToken $token
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface|MastodonResourceOwner
@@ -102,6 +108,8 @@ class Mastodon extends AbstractProvider
 
 
     /**
+     * Requests resource owner details.
+     *
      * @param AccessToken $token
      * @return mixed
      */
@@ -112,6 +120,8 @@ class Mastodon extends AbstractProvider
 
 
     /**
+     * Builds the authorization URL.
+     *
      * @param array $options
      * @return string
      */
