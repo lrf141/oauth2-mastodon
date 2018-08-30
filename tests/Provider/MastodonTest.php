@@ -110,4 +110,12 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
         $this->assertEquals('mock_access_token', $token->getToken());
     }
+
+    public function testGetInstanceUrl()
+    {
+        $url = $this->provider->getInstanceUrl();
+
+        $this->assertEquals('https://mstdn.jp', $url);
+        $this->assertNotEquals('https://mastodon.jp', $url);
+    }
 }
