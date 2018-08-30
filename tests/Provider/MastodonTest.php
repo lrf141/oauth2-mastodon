@@ -9,6 +9,7 @@
 namespace Lrf141\OAuth2\Client\Test\Provider;
 
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
+use Mockery as m;
 
 class MastodonTest extends \PHPUnit\Framework\TestCase
 {
@@ -35,6 +36,7 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
 
     public function tearDown()
     {
+        m::close();
         parent::tearDown();
     }
 
@@ -95,4 +97,17 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/oauth/token', $uri['path']);
     }
 
+    public function testGetAccessToken()
+    {
+        $response = m::mock('Psr\Http\Message\ResponseInterface');
+        $response->shouldReceive('getBody')->andReturn('{"access_token": "mock_access_token", "token_type": "bearer", "account_id": "12345", "uid": "deprecated_id"}');
+        $response->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
+
+        $client = m::mock('GuzzleHttp\ClientInterface');
+        $client->shouldReceive('send')->times(1)->andReturn($response);
+        $this->provider->setHttpClient($client);
+
+        $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+        $this->assertEquals('mock_access_token', $token->getToken());
+    }
 }
