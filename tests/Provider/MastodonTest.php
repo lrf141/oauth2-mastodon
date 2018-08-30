@@ -66,4 +66,17 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
         $url = $this->provider->getInstanceUrl();
         $this->assertSame('https://mstdn.jp', $url);
     }
+
+
+    public function testScopes()
+    {
+        $options = [
+            'scope' => 'read write follow',
+        ];
+        $query = ['scope' => 'read write follow'];
+        $url = $this->provider->getAuthorizationUrl($options);
+        $encodedScope = $this->buildQueryString($query);
+        $this->assertContains($encodedScope, $url);
+    }
+
 }
