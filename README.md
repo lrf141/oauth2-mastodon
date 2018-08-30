@@ -1,27 +1,19 @@
 # oauth2-mastodon
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Latest Stable Version](https://poser.pugx.org/lrf141/oauth2-mastodon/v/stable)](https://packagist.org/packages/lrf141/oauth2-mastodon)
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status](https://travis-ci.org/lrf141/oauth2-mastodon.svg?branch=master)](https://travis-ci.org/lrf141/oauth2-mastodon)
 [![Code Coverage](https://scrutinizer-ci.com/g/lrf141/oauth2-mastodon/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lrf141/oauth2-mastodon/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lrf141/oauth2-mastodon/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lrf141/oauth2-mastodon/?branch=master)
-[![Total Downloads][ico-downloads]][link-downloads]
+[![Total Downloads](https://img.shields.io/packagist/dt/lrf141/oauth2-mastodon.svg?style=flat-square)](https://packagist.org/packages/lrf141/oauth2-mastodon)
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_website``` ```:author_email``` ```:vendor``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can run `$ php prefill.php` in the command line to make all replacements at once. Delete the file prefill.php as well.
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
 
 ## Structure
 
 If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
 
 ```
-bin/        
-config/
-src/
-tests/
-vendor/
+
 ```
 
 
@@ -30,14 +22,51 @@ vendor/
 Via Composer
 
 ``` bash
-$ composer require :vendor/:package_name
+$ composer require lrf141/oauth2-mastodon
 ```
 
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+<?php
+
+use Lrf141\OAuth2\Client\Provider\Mastodon;
+
+session_start();
+
+$provider = new Mastodon([
+    'clientId' => '',
+    'clientSecret' => '',
+    'redirectUri' => 'redirect url',
+    'instance' => 'https://mstdn.jp',
+]);
+
+
+if (!isset($_GET['code'])) {
+
+    $authUrl = $provider->getAuthorizationUrl();
+
+    $_SESSION['oauth2state'] = $provider->getState();
+    header('Location: '.$authUrl);
+    exit;
+
+// Check given state against previously stored one to mitigate CSRF attack
+} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+
+    unset($_SESSION['oauth2state']);
+    echo "hello \n";
+    exit('Invalid state');
+
+} else {
+
+    // Try to get an access token (using the authorization code grant)
+    $token = $provider->getAccessToken('authorization_code', [
+        'code' => $_GET['code']
+    ]);
+
+    echo $token->getToken();
+}
+
 ```
 
 ## Change log
