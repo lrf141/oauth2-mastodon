@@ -88,4 +88,11 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('/oauth/authorize', $uri['path']);
     }
 
+    public function testGetBaseAccessTokenUrl()
+    {
+        $url = $this->provider->getBaseAccessTokenUrl([]);
+        $uri = parse_url($url);
+        $this->assertEquals('/oauth/token', $uri['path']);
+    }
+
 }
