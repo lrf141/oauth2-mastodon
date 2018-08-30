@@ -6,8 +6,7 @@
  * Time: 2:26
  */
 
-namespace Lrf141\OAuth2\Client;
-
+namespace Lrf141\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
@@ -46,9 +45,8 @@ class MastodonResourceOwner implements ResourceOwnerInterface
     /**
      * @return array
      */
-    public function  toArray()
+    public function toArray()
     {
         return $this->response;
     }
-
 }

@@ -13,13 +13,38 @@ class Mastodon extends AbstractProvider
 
     use BearerAuthorizationTrait;
 
+    /**
+     * Mastodon Instance URL
+     * ex) https://mstdn.jp
+     * @var string
+     */
+    protected $instance;
+
 
     /**
+     * Mastodon constructor.
+     * @param array $options
+     * @param array $collaborators
+     */
+    public function __construct(array $options = [], array $collaborators = [])
+    {
+        parent::__construct($options, $collaborators);
+
+        if (isset($options['instance'])) {
+            $this->instance = $options['instance'];
+        }
+    }
+
+
+    /**
+     *
      * @return string
      */
     public function getBaseAuthorizationUrl()
     {
-        return '';
+        $oauth_url = $this->instance.'/oauth/authorize';
+
+        return $oauth_url;
     }
 
     /**
@@ -28,7 +53,9 @@ class Mastodon extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return '';
+        $oauth_token_url = $this->instance.'/oauth/token';
+
+        return $oauth_token_url;
     }
 
 
@@ -95,5 +122,15 @@ class Mastodon extends AbstractProvider
     public function getAuthorizationUrl(array $options = [])
     {
         return parent::getAuthorizationUrl($options);
+    }
+
+
+    /**
+     * get mastodon instance url
+     * @return string
+     */
+    public function getInstanceUrl() : string
+    {
+        return $this->instance;
     }
 }
