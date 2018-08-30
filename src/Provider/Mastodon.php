@@ -69,7 +69,7 @@ class Mastodon extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return [];
+        return ['scope' => 'read'];
     }
 
     /**
