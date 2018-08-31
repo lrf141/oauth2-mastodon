@@ -8,22 +8,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/lrf141/oauth2-mastodon.svg?style=flat-square)](https://packagist.org/packages/lrf141/oauth2-mastodon)
 
 
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-├── src
-│   └── Provider
-│       ├── Mastodon.php
-│       └── MastodonResourceOwner.php
-├── tests
-    └── Provider
-        └── MastodonTest.php
-
-```
-
-
 ## Install
 
 Via Composer
@@ -100,7 +84,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 
 ## Security
 
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
+If you discover any security related issues, please email ghost141.kentyo @ gmail.com instead of using the issue tracker.
 
 ## Credits
 
