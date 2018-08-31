@@ -71,6 +71,14 @@ if (!isset($_GET['code'])) {
         'code' => $_GET['code']
     ]);
 
+    try {
+        $user = $provider->getResourceOwner($token);
+        echo $user->getName();
+    }catch(Exception $e){
+        exit('Oh dear...');
+    }
+
+
     echo $token->getToken();
 }
 
