@@ -8,6 +8,7 @@
 
 namespace Lrf141\OAuth2\Client\Test\Provider;
 
+use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
 use Mockery as m;
 
@@ -117,5 +118,30 @@ class MastodonTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('https://mstdn.jp', $url);
         $this->assertNotEquals('https://mastodon.jp', $url);
+    }
+
+    public function testUserData()
+    {
+
+        $name = uniqid();
+        $account_id = 'dbid:' . rand(1000, 9999);
+        $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
+        $postResponse->shouldReceive('getBody')->andReturn('{"access_token": "mock_access_token", "token_type": "bearer", "account_id": "' . $account_id . '", "uid": "12345"}');
+        $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
+        $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
+        $userResponse->shouldReceive('getBody')->andReturn('{"id": "'.$account_id.'", "username": "'.$name.'", "display_name": "'.$name.'"}');
+        $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
+        $client = m::mock('GuzzleHttp\ClientInterface');
+        $client->shouldReceive('send')
+            ->times(2)
+            ->andReturn($postResponse, $userResponse);
+        $this->provider->setHttpClient($client);
+        $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+        $user = $this->provider->getResourceOwner($token);
+
+        $this->assertEquals($account_id, $user->getId());
+        $this->assertEquals($account_id, $user->toArray()['id']);
+        $this->assertEquals($name, $user->getName());
+        $this->assertEquals($name, $user->toArray()['username']);
     }
 }

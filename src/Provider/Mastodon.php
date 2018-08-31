@@ -63,7 +63,7 @@ class Mastodon extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return '';
+        return $this->instance . '/api/v1/accounts/verify_credentials';
     }
 
     /**

@@ -31,7 +31,7 @@ class MastodonResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->getValueByKey($this->response, '');
+        return $this->getValueByKey($this->response, 'id');
     }
 
     /**
@@ -39,8 +39,9 @@ class MastodonResourceOwner implements ResourceOwnerInterface
      */
     public function getName()
     {
-        return $this->getValueByKey($this->response, '');
+        return $this->getValueByKey($this->response, 'username');
     }
+
 
     /**
      * @return array
