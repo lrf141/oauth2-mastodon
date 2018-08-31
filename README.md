@@ -30,6 +30,7 @@ $provider = new Mastodon([
     'clientSecret' => '',
     'redirectUri' => 'redirect url',
     'instance' => 'https://mstdn.jp',
+    'scope' => 'read write follow',
 ]);
 
 
