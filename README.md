@@ -45,7 +45,6 @@ if (!isset($_GET['code'])) {
 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
 
     unset($_SESSION['oauth2state']);
-    echo "hello \n";
     exit('Invalid state');
 
 } else {
