@@ -22,6 +22,12 @@ class Mastodon extends AbstractProvider
 
 
     /**
+     * @var array
+     */
+    protected $scope;
+
+
+    /**
      * Mastodon constructor.
      * @param array $options
      * @param array $collaborators
@@ -32,6 +38,10 @@ class Mastodon extends AbstractProvider
 
         if (isset($options['instance'])) {
             $this->instance = $options['instance'];
+        }
+
+        if (isset($options['scope'])) {
+            $this->scope = $options['scope'];
         }
     }
 
@@ -72,7 +82,7 @@ class Mastodon extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['scope' => 'read'];
+        return isset($this->scope) ? $this->scope : ['scope' => 'read'];
     }
 
     /**
