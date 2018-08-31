@@ -53,11 +53,17 @@ if (!isset($_GET['code'])) {
     $token = $provider->getAccessToken('authorization_code', [
         'code' => $_GET['code']
     ]);
-
+    
+    // Optional: Now you have a token you can look up a users profile data
     try {
+    
         $user = $provider->getResourceOwner($token);
+       
         echo $user->getName();
-    }catch(Exception $e){
+        
+    } catch(Exception $e) {
+       
+       
         exit('Oh dear...');
     }
 
